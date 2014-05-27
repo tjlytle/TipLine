@@ -25,7 +25,7 @@ class Service
      */
     protected $collection;
 
-    public function __construct(\Mongo $mongo, $dbname = 'nexmo_demo', $collection = 'tips')
+    public function __construct(\MongoClient $mongo, $dbname = 'nexmo_demo', $collection = 'tips')
     {
         $this->mongo = $mongo;
         $this->db = $mongo->selectDB($dbname);
