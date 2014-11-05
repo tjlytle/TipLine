@@ -1,0 +1,25 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <?php if(!isset($tips)):?>
+        <form method="post">
+            <?php if(!isset($_SESSION['request_id'])): ?>
+            <input type="text" name="number" placeholder="14845551212">
+            <?php else: ?>
+            <input type="text" name="code" placeholder="1234">
+            <?php endif; ?>
+            <input type="submit">
+        </form>
+        <?php else: ?>
+            <p>Your Tips:</p>
+            <ul>
+            <?php foreach($tips as $tip): ?>
+                <li><?php echo htmlspecialchars($tip['when'] . ', ' . $tip['what']) ?></li>
+            <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+
+    </body>
+</html>

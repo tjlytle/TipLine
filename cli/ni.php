@@ -6,24 +6,19 @@ $service = new Storage($db);
 
 $numbers = $service->getNumbers();
 
-$tips = $service->getRandom(count($numbers));
-
 foreach($numbers as $number){
-    $text = array_pop($tips);
-
-    $url = 'http://rest.nexmo.com/tts/json?' . http_build_query([
+    $url = 'http://rest.nexmo.com/ni/json?' . http_build_query([
             'api_key' => NEXMO_KEY,
             'api_secret' => NEXMO_SECRET,
-            'to' => $number,
-            'from' => NEXMO_FROM,
-            'text' => $text
+            'number' => $number['_id'],
+            'callback' => 'http://live.demo.nexmo.ninja/ni.php'
         ]);
 
-    error_log('sending the tip: ' . $text);
+    error_log('requesting number data');
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    //$response = curl_exec($ch);
+    $response = curl_exec($ch);
     curl_close($ch);
 
     error_log($response);
