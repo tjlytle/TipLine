@@ -1,14 +1,11 @@
 <?php
 use Tips\Storage\Mongo as Storage;
 require_once __DIR__ . '/../config/bootstrap.php';
-
 $service = new Storage($db);
 
 session_start();
 
-error_log(json_encode($_SESSION));
-
-if(isset($_SESSION['request_id']) AND isset($_POST['code'])){ //login
+if(isset($_SESSION['request_id']) AND isset($_POST['code'])){ //login with code
     $url = 'http://api.nexmo.com/verify/check/json?' . http_build_query([
             'api_key' => NEXMO_KEY,
             'api_secret' => NEXMO_SECRET,
@@ -16,14 +13,14 @@ if(isset($_SESSION['request_id']) AND isset($_POST['code'])){ //login
             'code' => $_POST['code']
         ]);
 
-    error_log('requesting verification check');
+    smart_log('requesting verification check');
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $response = curl_exec($ch);
     curl_close($ch);
 
-    error_log($response);
+    smart_log($response);
 
     $response = json_decode($response, true);
 
@@ -32,7 +29,7 @@ if(isset($_SESSION['request_id']) AND isset($_POST['code'])){ //login
         $_SESSION = [];
     }
 
-} elseif(isset($_POST['number'])){ //first step
+} elseif(isset($_POST['number'])){ //got number
     $url = 'http://api.nexmo.com/verify/json?' . http_build_query([
             'api_key' => NEXMO_KEY,
             'api_secret' => NEXMO_SECRET,
@@ -40,14 +37,14 @@ if(isset($_SESSION['request_id']) AND isset($_POST['code'])){ //login
             'brand' => 'tipline'
         ]);
 
-    error_log('requesting verification data');
+    smart_log('requesting verification data');
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $response = curl_exec($ch);
     curl_close($ch);
 
-    error_log($response);
+    smart_log($response);
 
     $response = json_decode($response, true);
 

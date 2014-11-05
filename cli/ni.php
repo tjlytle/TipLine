@@ -1,7 +1,6 @@
 <?php
 use Tips\Storage\Mongo as Storage;
 require_once __DIR__ . '/../config/bootstrap.php';
-
 $service = new Storage($db);
 
 $numbers = $service->getNumbers();
@@ -14,12 +13,12 @@ foreach($numbers as $number){
             'callback' => 'http://live.demo.nexmo.ninja/ni.php'
         ]);
 
-    error_log('requesting number data');
+    smart_log('requesting number data');
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $response = curl_exec($ch);
     curl_close($ch);
 
-    error_log($response);
+    smart_log($response);
 }

@@ -20,7 +20,7 @@ class Mongo implements StorageInterface
         $this->db = $db;
     }
 
-    public function addTip($tip, $from)
+    public function addTip($tip, $from, $to)
     {
         if(!is_string($tip)){
             throw new \InvalidArgumentException('expected tip to be a string');
@@ -45,7 +45,9 @@ class Mongo implements StorageInterface
             [
                 '$inc'   => ['tips' => 1],
                 '$set' => [
-                    'masked' => substr($from, 0, (strlen($from) - 4)) . '----'
+                    'masked' => substr($from, 0, (strlen($from) - 4)) . '----',
+                    'to'     => $to,
+                    'number' => $from
                 ]
             ],
             ['upsert' => true]

@@ -14,11 +14,14 @@ interface StorageInterface
     /**
      * Add a tip to the system, ID the user by phone number.
      *
+     * Track the inbound number, for context later.
+     *
      * @param string $tip
      * @param string $from
+     * @param string $to
      * @return null
      */
-    public function addTip($tip, $from);
+    public function addTip($tip, $from, $to);
 
     /**
      * Get the tips a number added.
