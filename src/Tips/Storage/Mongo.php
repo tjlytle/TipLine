@@ -57,7 +57,7 @@ class Mongo implements StorageInterface
     public function getNumbers()
     {
         $numbers = $this->getNumberCollection()->find();
-        return $numbers;
+        return iterator_to_array($numbers);
     }
 
     /**
