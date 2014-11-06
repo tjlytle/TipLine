@@ -12,6 +12,7 @@ foreach($numbers as $number){
         $info = $number['info'];
         echo implode(' | ', [$info['number_type'], $info['ported'], $info['carrier_country_code'], $info['carrier_network_name']]);
     }
+    echo PHP_EOL;
 }
 
 echo PHP_EOL;
